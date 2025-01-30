@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    void solve(int col,int n,vector<int>&board,vector<vector<int>>&result){
+        if(col==n){
+            result.push_back(board);
+            return ;
+        }
+        for(int i=0;i<n;i++){
+            if(isSafe(board,col,i)){
+                board[col]=i+1;
+                solve(col+1,n,board,result);
+            }
+        }
+    }
+    bool isSafe(vector<int>&board,int col,int row){
+        for(int i=0;i<col;i++){
+            int places=board[i]-1;
+            if(places==row || abs(places-row)==abs(i-col)){
+                return false;
+            }
+        }
+        return true;
+    }
+    vector<vector<int>> nQueen(int n) {
+        vector<vector<int>>res;
+        vector<int>board(n,0);
+        solve(0,n,board,res);
+        return res;
+    }
+};
+
+//Hard Problem Try to Understand it Later.
