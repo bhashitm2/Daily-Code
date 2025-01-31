@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<int>dir={-1,0,1,0,-1};
+    bool isvalid(int &n,int x,int y){
+        return(x>=0 && y>=0 && x<n && y<n);
+    }
+    int mark(vector<vector<int>>&grid,int &i,int &n,int x,int y){
+        grid[x][y]=i;
+        int cnt=1;
+        for(int d=0;d<4;d++){
+            int nx=x+dir[d];
+            int ny=y+dir[d+1];
+            if(isvalid(n,nx,ny) && grid[nx][ny]==1){
+                cnt+=mark(grid,i,n,nx,ny);
+            }
+        }
+        return cnt;
+    }
+    int largestIsland(vector<vector<int>>& grid) {
+        int n=grid.size();
+        unordered_map<int,int>isize;
+        int island=2;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    int land = mark(grid,island,n,i,j);
+                    isize[island]=land;
+                    island++;
+                }
+            }
+        }
+        int max_size=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==0){
+                    set<int>lands;
+                    for(int pos=0;pos<4;pos++){
+                        int x=dir[pos]+i;
+                        int y=dir[pos+1]+j;
+                        if(isvalid(n,x,y) && grid[x][y]>1){
+                            lands.insert(grid[x][y]);
+                        }
+                    }
+                    int curr=1;
+                    for(auto key : lands){
+                        curr+=isize[key];
+                    }
+                    max_size=max(max_size,curr);
+                }
+            }
+        }
+        return max_size==0?n*n:max_size;
+    }
+};
