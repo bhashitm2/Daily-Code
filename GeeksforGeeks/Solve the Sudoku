@@ -1,0 +1,40 @@
+void solveSudoku(vector<vector<int>> &mat) {
+        solve(mat,0,0);
+    }
+    bool solve(vector<vector<int>>&mat,int r,int c){
+        if(r==9)return true;
+        int nr=0;
+        int nc=0;
+        if(c==8){
+            nr=r+1;
+            nc=0;
+        }
+        else{
+            nr=r;
+            nc=c+1;
+        }
+        if(mat[r][c]!=0)return solve(mat,nr,nc);
+        else{
+            for(int i=1;i<=9;i++){
+                if(isvalid(mat,r,c,i)){
+                    mat[r][c]=i;
+                    if(solve(mat,nr,nc))return true;
+                    else mat[r][c]=0;
+                }
+            }
+            return false;
+        }
+    }
+    bool isvalid(vector<vector<int>>&mat,int nr,int nc,int val){
+        for(int i=0;i<9;i++){
+            if(mat[nr][i]==val || mat[i][nc]==val)return false;
+        }
+        int R=(nr/3)*3;
+        int C=(nc/3)*3;
+        for(int i=R;i<R+3;i++){
+            for(int j=C;j<C+3;j++){
+                if(mat[i][j]==val)return false;
+            }
+        }
+        return true;
+    }
