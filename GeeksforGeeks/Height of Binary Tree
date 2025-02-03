@@ -1,0 +1,18 @@
+int height(Node* root) {
+        vector<vector<int>>ans;
+        queue<Node*>q1;
+        q1.push(root);
+        while(!q1.empty()){
+            int size=q1.size();
+            vector<int>lvl;
+            for(int i=0;i<size;i++){
+                Node*node = q1.front();
+                q1.pop();
+                lvl.push_back(node->data);
+                if(node->left)q1.push(node->left);
+                if(node->right)q1.push(node->right);
+            }
+            ans.push_back(lvl);
+        }
+        return ans.size()-1;
+    }
