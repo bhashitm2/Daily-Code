@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        if(s1==s2)return true;
+        int diffs=0;
+        int first=0;
+        int second=0;
+        for(int i=0;i<s1.size();i++){
+            if(s1[i]!=s2[i]){
+                diffs++;
+                if(diffs==1){
+                    first=i;
+                }
+                if(diffs==2){
+                    second=i;
+                }
+            }
+            if(diffs>2)return false;
+            
+        }
+        swap(s2[first],s2[second]);
+        cout<<s2<<endl;
+        if(s1==s2){
+            return true;
+        }
+        return false;
+    }
+};
+//TC=O(N)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        if(s1==s2)return true;
+        int start = 0;
+        int end = s1.size()-1;
+        for(int i=0;i<s1.size();i++){
+            for(int j=0;j<s2.size();j++){
+                swap(s2[i],s2[j]);
+                if(s1==s2)return true;
+                else{
+                    swap(s2[j],s2[i]);
+                }
+            }
+        }
+        return false;
+    }
+};
+//TC=O(N^2)
