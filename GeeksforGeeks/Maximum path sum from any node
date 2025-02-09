@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    int height(Node*root,int&maxi){
+        if(root==nullptr)return 0;
+        int lefty=max(0,height(root->left,maxi));
+        int righty=max(0,height(root->right,maxi));
+        maxi=max(maxi,lefty+righty+root->data);
+        return root->data+max(lefty,righty);
+    }
+    int findMaxSum(Node *root) {
+        int maxi=INT_MIN;
+        height(root,maxi);
+        return maxi;
+    }
+};
