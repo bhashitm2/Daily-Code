@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    void Sum(Node*root,int &data,unordered_map<int,int>&mpp,int k,int &cnt){
+        if(root==nullptr)return;
+        data+=root->data;
+        if(mpp.find(data-k)!=mpp.end()){
+            cnt+=mpp[data-k];
+        }
+        mpp[data]++;
+        Sum(root->left,data,mpp,k,cnt);
+        Sum(root->right,data,mpp,k,cnt);
+        mpp[data]-=1;
+        if(mpp[data]==0)mpp.erase(data);
+        data-=root->data;
+        return;
+    }
+    int sumK(Node *root, int k) {
+        unordered_map<int,int>mpp;
+        int cnt=0;
+        mpp[0]=1;
+        int data=0;
+        Sum(root,data,mpp,k,cnt);
+        return cnt;
+    }
+};
