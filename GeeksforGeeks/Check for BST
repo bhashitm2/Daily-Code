@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    void inorder(Node*root,vector<int>&arr){
+        if(root==nullptr)return;
+        inorder(root->left,arr);
+        arr.push_back(root->data);
+        inorder(root->right,arr);
+    }
+    bool isBST(Node* root) {
+        vector<int>arr1;
+        vector<int>arr2;
+        inorder(root,arr1);
+        inorder(root,arr2);
+        sort(arr1.begin(),arr1.end());
+        for(int i=0;i<arr1.size();i++){
+            if(arr1[i]!=arr2[i])return false;
+        }
+        return true;
+    }
+};
