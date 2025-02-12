@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int sumofdigit(int x){
+        int sum=0;
+        while(x>0){
+            sum=sum+x%10;
+            x/=10;
+        }
+        return sum;
+    }
+    int maximumSum(vector<int>& nums) {
+        int ans=-1;
+        unordered_map<int,int>mpp;
+        sort(nums.begin(),nums.end(),greater<>());
+        for(auto it : nums){
+            int num=sumofdigit(it);
+                if(mpp[num]==0)                
+                    mpp[num]=it;
+                else
+                    ans=max(ans,mpp[num]+it);
+            }
+        return ans;
+    }
+};
