@@ -1,0 +1,37 @@
+class Solution {
+  public:
+    void inorder(Node*root,vector<int>&ans){
+        if(root==nullptr)return;
+        inorder(root->left,ans);
+        ans.push_back(root->data);
+        inorder(root->right,ans);
+    }
+    int kthSmallest(Node *root, int k) {
+        vector<int>arr;
+        inorder(root,arr);
+        if(arr.size()<k)return -1;
+        return arr[k-1];
+    }
+};
+//TC=O(N) and SC=O(N);
+----------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+  public:
+    void inorder(Node*root,int &k,int &ans,int &cnt){
+        if(root==nullptr)return;
+        inorder(root->left,k,ans,cnt);
+        cnt++;
+        if(cnt==k){
+            ans=root->data;
+            return;
+        }
+        inorder(root->right,k,ans,cnt);
+    }
+    int kthSmallest(Node *root, int k) {
+        int ans=-1;
+        int cnt=0;
+        inorder(root,k,ans,cnt);
+        return ans;
+    }
+};
+//TC=O(N) and SC=O(1);
