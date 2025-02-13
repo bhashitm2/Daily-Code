@@ -1,0 +1,24 @@
+void inorder(Node*root,vector<int>&arr){
+        if(root==nullptr)return;
+        inorder(root->left,arr);
+        arr.push_back(root->data);
+        inorder(root->right,arr);
+    }
+    bool findTarget(Node *root, int target) {
+        vector<int>arr;
+        inorder(root,arr);
+        int start=0;
+        int end=arr.size()-1;
+        while(start<end){
+            if(arr[start]+arr[end]==target)return 1;
+            else if(arr[start]+arr[end]>target){
+                // cout<<arr[start]<<"start1 "<<arr[end]<<"end1 "<<endl;
+                end--;
+            }
+            else{
+                // cout<<arr[start]<<"start2 "<<arr[end]<<"end2 "<<endl;
+                start++;
+            }
+        }
+        return 0;
+    }
