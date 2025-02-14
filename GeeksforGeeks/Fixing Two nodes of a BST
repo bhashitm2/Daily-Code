@@ -1,0 +1,27 @@
+void inorder(Node*root , vector<Node*>&arr){
+        if(root==nullptr)return;
+        inorder(root->left,arr);
+        arr.push_back(root);
+        inorder(root->right,arr);
+    }
+    void correctBST(Node* root) {
+        Node*change1=nullptr;
+        Node*change2=nullptr;
+        vector<Node*>arr;
+        inorder(root,arr);
+        for(int i=1;i<arr.size();i++){
+            Node* val1=arr[i-1];
+            Node* val2=arr[i];
+            if(val1->data>val2->data){
+                if(change1==nullptr){
+                    change1=val1;
+                    change2=val2;
+                }
+                else{
+                    change2=val2;
+                }
+            }
+        }
+        swap(change1->data,change2->data);
+        return;
+    }
