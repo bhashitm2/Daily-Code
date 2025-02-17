@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    vector<int> kLargest(vector<int>& arr, int k) {
+        priority_queue<int>pq;
+        for(int i=0;i<arr.size();i++){
+            pq.push(arr[i]);
+        }
+        vector<int>op;
+        while(k--){
+            op.push_back(pq.top());
+            pq.pop();
+        }
+        return op;
+    }
+};
