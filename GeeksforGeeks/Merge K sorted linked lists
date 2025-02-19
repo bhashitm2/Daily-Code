@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    Node* mergeKLists(vector<Node*>& arr) {
+        vector<int>a1;
+        for(int i=0;i<arr.size();i++){
+            Node*dummy=arr[i];
+            while(dummy!=nullptr){
+                a1.push_back(dummy->data);
+                dummy=dummy->next;
+            }
+        }
+        sort(a1.begin(),a1.end());
+        Node*head=new Node(a1[0]);
+        Node*dummy=head;
+        for(int i=1;i<a1.size();i++){
+            dummy->next=new Node(a1[i]);
+            dummy=dummy->next;
+        }
+        return head;
+    }
+};
