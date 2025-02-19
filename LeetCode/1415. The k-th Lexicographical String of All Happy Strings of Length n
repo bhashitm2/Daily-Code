@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void combinations(vector<string>&chars,vector<string>&op,string curr,int n){
+        if(curr.length()==n){
+            op.push_back(curr);
+            return;
+        }
+        for(string& c:chars){
+            if(curr.empty()|| curr.back()!=c[0] ){
+                combinations(chars,op,curr+c,n);
+            }
+        }
+    }
+    string getHappyString(int n, int k) {
+        vector<string>check={"a","b","c"};
+        vector<string>op;
+        combinations(check,op,"",n);
+        if(k>op.size()){
+            return "";
+        }
+        return op[k-1];
+    }
+};
