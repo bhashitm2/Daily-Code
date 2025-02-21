@@ -1,0 +1,68 @@
+class FindElements {
+public:
+    TreeNode*root;
+    unordered_map<int,int>mpp;
+    FindElements(TreeNode* root) {
+        this->root=root;
+        root->val=0;
+        mpp[0]++;
+        helper(root);
+    }
+    void helper(TreeNode*root){
+        if(root==nullptr)return;
+        if(root->left!=nullptr){
+            root->left->val=2*root->val+1;
+            mpp[root->left->val]++;
+            helper(root->left);
+        }
+        if(root->right!=nullptr){
+            root->right->val=2*root->val+2;
+            mpp[root->right->val]++;
+            helper(root->right);
+        }
+    }
+
+    bool find(int target) {
+        if(mpp[target]!=0)return true;
+        return false;
+    }
+};
+
+O(n) and O(1)
+----------------------------------------------------------------------------------------------------------
+class FindElements {
+public:
+    TreeNode*root;
+    FindElements(TreeNode* root) {
+        this->root=root;
+        root->val=0;
+        helper(root);
+    }
+    void helper(TreeNode*root){
+        if(root==nullptr)return;
+        if(root->left!=nullptr){
+            root->left->val=2*root->val+1;
+            helper(root->left);
+        }
+        if(root->right!=nullptr){
+            root->right->val=2*root->val+2;
+            helper(root->right);
+        }
+    }
+    void inorder(TreeNode* root,vector<int>&arr){
+        if(root==nullptr)return;
+        inorder(root->left,arr);
+        arr.push_back(root->val);
+        inorder(root->right,arr);
+    }
+    bool find(int target) {
+        vector<int>arr;
+        inorder(root,arr);
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]==target)return true;
+        }
+        return false;
+    }
+};
+
+O(n) and O(n)
