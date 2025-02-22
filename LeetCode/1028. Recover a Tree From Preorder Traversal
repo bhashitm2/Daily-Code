@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int getval(string &s,int &pos){
+        int val=0;
+        while(pos<s.size() && s[pos]>='0' && s[pos]<='9'){
+            val=val*10+s[pos]-'0';
+            pos++;
+        }
+        return val;
+    }
+    int getdash(string &s,int &pos){
+        int len=0;
+        while(pos<s.size() && s[pos]=='-'){
+            len++;
+            pos++;
+        }
+        return len;
+    }
+    void buildtree(TreeNode*curr,int exp,string &s,int n,int &pos){
+        if(pos==n)return;
+        int prev=pos;
+        int dashes=getdash(s,pos);
+        if(exp!=dashes){
+            pos=prev;
+            return;
+        }
+        int node_val=getval(s,pos);
+        TreeNode*node=new TreeNode(node_val);
+        if(!curr->left)curr->left=node;
+        else{
+            curr->right=node;
+        }
+        buildtree(node,exp+1,s,n,pos);
+        buildtree(node,exp+1,s,n,pos);
+    }
+    TreeNode* recoverFromPreorder(string traversal) {
+        int n=traversal.size();
+        int pos=0;
+        TreeNode*root=new TreeNode(getval(traversal,pos));
+        buildtree(root,1,traversal,n,pos);
+        buildtree(root,1,traversal,n,pos);
+        return root;
+    }
+};
