@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& nums) {
+        int mod=1e9+7;
+        int cnt = 0;
+        int prefixsum = 0;
+        int odd=0;
+        int even=1;
+        for (int i = 0; i < nums.size(); i++) {
+            prefixsum += nums[i];
+            if(prefixsum%2==0){
+                cnt+=odd;
+                even++;
+            }
+            else{
+                cnt+=even;
+                odd++;
+            }
+        cnt%=mod;
+        }
+        return cnt;
+    }
+};
