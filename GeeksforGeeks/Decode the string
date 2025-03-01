@@ -1,0 +1,52 @@
+class Solution {
+public:
+    std::string decodedString(std::string& s) {
+        std::stack<char> st; // Stack to hold characters and build the result
+
+        // Iterate through the input string
+        for (char ch : s) {
+            if (ch != ']') {
+                st.push(ch); // Push all characters except ']'
+            } else {
+                // Encountered ']', decode the substring inside []
+                std::string innerStr = "";
+                while (!st.empty() && st.top() != '[') {
+                    innerStr += st.top(); // Build the string inside brackets
+                    st.pop();
+                }
+                std::reverse(innerStr.begin(), innerStr.end()); // Reverse to correct order
+                st.pop(); // Remove '['
+
+                // Extract the number before '['
+                std::string numStr = "";
+                while (!st.empty() && std::isdigit(st.top())) {
+                    numStr += st.top();
+                    st.pop();
+                }
+                std::reverse(numStr.begin(), numStr.end()); // Reverse to correct order
+                int repeatCount = std::stoi(numStr); // Convert to integer
+
+                // Repeat the inner string 'repeatCount' times
+                std::string repeatedStr = "";
+                for (int i = 0; i < repeatCount; i++) {
+                    repeatedStr += innerStr;
+                }
+
+                // Push the repeated string back onto the stack
+                for (char c : repeatedStr) {
+                    st.push(c);
+                }
+            }
+        }
+
+        // Build the final result from the stack
+        std::string result = "";
+        while (!st.empty()) {
+            result += st.top();
+            st.pop();
+        }
+        std::reverse(result.begin(), result.end()); // Reverse to correct order
+
+        return result;
+    }
+};
