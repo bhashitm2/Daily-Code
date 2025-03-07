@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isprime(int n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    for (int i = 3; i * i <= n; i += 2) {
+        if (n % i == 0) return false;
+    }
+    return true;
+    }
+    vector<int> closestPrimes(int left, int right) {
+    int prev = -1, first = -1, second = -1, minDiff = INT_MAX;
+
+    for (int i = left; i <= right; i++) {
+        if (isprime(i)) {
+            if (prev != -1 && (i - prev) < minDiff) {
+                minDiff = i - prev;
+                first = prev;
+                second = i;
+            }
+            prev = i;
+        }
+    }
+
+    return (first == -1) ? vector<int>{-1, -1} : vector<int>{first, second};
+}
+
+};
