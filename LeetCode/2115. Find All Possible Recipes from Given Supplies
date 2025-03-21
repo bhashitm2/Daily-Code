@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+        int n=recipes.size();
+        vector<string>ans;
+        unordered_map<string,bool>req;
+        for(int i=0;i<supplies.size();i++){
+            req[supplies[i]]=true;
+        }
+        bool added = true; 
+        while (added) {
+            added = false;
+            for (int i = 0; i < n; i++) {
+                string food = recipes[i];
+                if (req.count(food)) continue; 
+                bool canMake = true;
+                for (string &ingredient : ingredients[i]) {
+                    if (!req.count(ingredient)) {
+                        canMake = false;
+                        break;
+                    }
+                }
+
+                if (canMake) {
+                    req[food] = true;
+                    ans.push_back(food);
+                    added = true;
+                }
+            }
+        }
+        return ans;
+    }
+};
