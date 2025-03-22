@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int countCompleteComponents(int n, vector<vector<int>>& edges) {
+        int cnt=0;
+        vector<vector<int>>list(n);
+        for(int i=0;i<edges.size();i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            list[u].push_back(v);
+            list[v].push_back(u);
+        }
+        queue<int>q1;
+        vector<bool>vis(n,false);
+        for(int i=0;i<n;i++){
+            if(vis[i]==false){
+                q1.push(i);
+                vis[i]=true;
+                vector<int>compo;
+                int edges=0;
+                while(!q1.empty()){
+                    int val=q1.front();
+                    q1.pop();
+                    compo.push_back(val);
+                    edges+=list[val].size();
+                    for(auto ele:list[val]){
+                        if(vis[ele]!=true){
+                            vis[ele]=true;
+                            q1.push(ele);
+                        }
+                    }
+                }
+                int size=compo.size();
+                if(edges/2==(size*(size-1))/2)cnt++;
+            }
+        }
+        return cnt;
+    }
+};
