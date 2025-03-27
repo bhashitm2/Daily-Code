@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minimumIndex(vector<int>& nums) {
+        map<int,int>mpp;
+        for(int i=0;i<nums.size();i++){
+            mpp[nums[i]]++;
+        }
+        int major;
+        int freq=INT_MIN;
+        for(auto it : mpp){
+            if(freq<it.second){
+                freq=it.second;
+                major=it.first;
+            }
+        }
+        int prefix=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==major){
+                prefix++;
+                freq--;
+            }
+            if(((freq))>((nums.size()-i-1)/2) && prefix>((i+1)/2))return i;
+        }
+        return -1;   
+    }
+};
