@@ -1,0 +1,17 @@
+int maxPartitions(string &s) {
+        int cnt=0;
+        vector<int>arr(26,0);
+        for(int i=0;i<s.size();i++){
+            arr[s[i]-'a']=i;
+        }
+        int end=0;
+        int start=0;
+        for(int i=0;i<s.size();i++){
+            end=max(end,arr[s[i]-'a']);
+            if(i==end){
+                cnt++;
+                start=i+1;
+            }
+        }
+        return cnt;
+    }
