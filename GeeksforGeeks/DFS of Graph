@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    void fxn(int node,vector<int>&ans,vector<int>&vis,vector<vector<int>>adj){
+        vis[node]=1;
+        ans.push_back(node);
+        for(auto it: adj[node]){
+            if(!vis[it]){
+                fxn(it,ans,vis,adj);
+            }
+        }
+    }
+    vector<int> dfs(vector<vector<int>>& adj) {
+        vector<int>vis(adj.size(),0);
+        int start=0;
+        vector<int>ans;
+        fxn(start,ans,vis,adj);
+        return ans;
+        
+    }
+};
