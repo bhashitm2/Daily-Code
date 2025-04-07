@@ -1,0 +1,31 @@
+class Solution {
+public:
+bool solve(int index,vector<int>& nums,int total,int sum, vector<vector<int>>& dp)
+{
+      if(index>=nums.size() || sum>total)
+       return false;
+       
+       if(sum==(total/2)){
+        return true;
+       }
+       if(dp[index][sum]!=-1)
+        return dp[index][sum];
+      return dp[index][sum]=solve(index+1,nums,total,sum+nums[index],dp) ||  solve(index+1,nums,total,sum,dp);
+     
+       
+}
+    bool canPartition(vector<int>& nums) {
+       int total=0;
+        for(auto it:nums)
+         total+=it;
+         if(total%2!=0)
+          return false;
+
+          int target=total/2;
+           
+           int sum=0;
+           vector<vector<int>> dp(nums.size(), vector<int>(total + 1, -1));
+         return solve(0,nums,total,sum,dp);
+         
+    }
+};
