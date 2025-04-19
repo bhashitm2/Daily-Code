@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    int maxXor(vector<int> &nums) {
+        int result=0;
+        int mask=0;
+        set<int>prefix_set;
+        for(int i =30;i>=0;i--){
+            mask|=1<<i;
+            for(auto num:nums){
+                prefix_set.insert(num&mask);
+            }
+            int temp=result | 1<<i;
+            for(int prefix:prefix_set){
+                if(prefix_set.count(temp^prefix)){
+                    result=temp;
+                    break;
+                
+                }
+            }
+            prefix_set.clear();
+        }
+        return result;
+    }
+};
