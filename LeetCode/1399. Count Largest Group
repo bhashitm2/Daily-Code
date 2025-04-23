@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int sum(int n){
+        int ans=0;
+        while(n!=0){
+            int val=n%10;
+            ans+=val;
+            n/=10;
+        }
+        return ans;
+    }
+    int countLargestGroup(int n) {
+        unordered_map<int,int>mpp;
+        while(n>=1){
+            int val=sum(n);
+            mpp[val]++;
+            n--;
+        }
+        vector<int>arr(1e7,0);
+        for(auto it : mpp){
+            arr[it.second]+=1;
+        }
+        int ans=0;
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]==0)continue;
+            ans=arr[i];
+        }
+        return ans;
+    }
+};
